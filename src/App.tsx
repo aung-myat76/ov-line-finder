@@ -1,46 +1,44 @@
-import "./App.css";
+import React, { useState } from "react";
+import Table from "./components/Table";
+import { type line } from "./models/line";
 
-import Header from "./components/Header.tsx";
-import logo from "./assets/react.svg";
-import { useState } from "react";
-import GoalList from "./components/GoalList.tsx";
-import NewGoal from "./components/NewGoal.tsx";
-
-export type GoalType = {
-    id: number;
-    title: string;
-    description: string;
+const getLocalOvLine = () => {
+    const lines = window.localStorage.getItem("ov-lines");
+    if (lines) {
+        return JSON.parse(lines);
+    } else {
+        return Array.from({ length: 20 }, (_, i) => ({
+            id: (i + 1).toString(),
+            lineName: "",
+            item: "",
+            location: ""
+        }));
+    }
 };
 
-function App() {
-    const [goals, setGoals] = useState<GoalType[]>([]);
+const App = () => {
+    const initialTable: line[] = getLocalOvLine();
 
-    const addGoalHanldler = (title: string, description: string) => {
-        setGoals((preGoals) => {
-            const newGoal: GoalType = {
-                id: Math.random(),
-                title: title,
-                description: description,
-            };
-            return [...preGoals, newGoal];
+    const [rows, setRows] = useState<line[]>(initialTable);
+
+    const updateRow = (id: string, key: keyof line, value: string) => {
+        setRows((preRows) => {
+            const updatedRows = preRows.map((row) =>
+                row.id === id ? { ...row, [key]: value } : row
+            );
+            window.localStorage.setItem(
+                "ov-lines",
+                JSON.stringify(updatedRows)
+            );
+            console.log(id, key, value);
+            return updatedRows;
         });
     };
-
-    const deleteGoalHandler = (id: number) => {
-        setGoals((preGoals) => {
-            return preGoals.filter((goal) => goal.id !== id);
-        });
-    };
-
     return (
-        <main>
-            <Header image={{ src: logo, alt: "a list of goals" }}>
-                <h1>Your Course Goals</h1>
-            </Header>
-            <NewGoal onAddGoal={addGoalHanldler} />
-            <GoalList goals={goals} deleteGoalHandler={deleteGoalHandler} />
-        </main>
+        <>
+            <Table rows={rows} updateRow={updateRow} />
+        </>
     );
-}
+};
 
 export default App;
