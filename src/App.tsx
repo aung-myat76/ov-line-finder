@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Table from "./components/Table";
 import { type line } from "./models/line";
 import Actions from "./components/Actions";

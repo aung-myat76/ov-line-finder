@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import { type FC } from "react";
 import html2canvas from "html2canvas";
 
 interface ActionsType {
