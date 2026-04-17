@@ -10,7 +10,7 @@ interface TableProps {
 
 const Table = ({ rows, updateRow }: TableProps) => {
     return (
-        <table>
+        <table id="table">
             <thead>
                 <tr>
                     <th className="no">No.</th>
