@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Table from "./components/Table";
 import { type line } from "./models/line";
+import Actions from "./components/Actions";
 
 const getLocalOvLine = () => {
     const lines = window.localStorage.getItem("ov-lines");
+    // const tableRef = useRef<HTMLTableElement>(null);
     if (lines) {
         return JSON.parse(lines);
     } else {
@@ -34,9 +36,24 @@ const App = () => {
             return updatedRows;
         });
     };
+
+    const handleReset = () => {
+        if (confirm("Are you sure to reset?")) {
+            setRows(
+                Array.from({ length: 20 }, (_, i) => ({
+                    id: (i + 1).toString(),
+                    lineName: "",
+                    item: "",
+                    location: ""
+                }))
+            );
+            localStorage.removeItem("ov-lines");
+        }
+    };
     return (
         <>
             <Table rows={rows} updateRow={updateRow} />
+            <Actions handleReset={handleReset} />
         </>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+// import React, { useEffect, useRef } from "react";
 import { type line } from "../models/line";
 import { allItems } from "../models/items";
 import Input from "./Input";
@@ -13,26 +13,27 @@ const Table = ({ rows, updateRow }: TableProps) => {
         <table>
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>Line</th>
-                    <th>Item</th>
-                    <th>Location</th>
+                    <th className="no">No.</th>
+                    <th className="lineName">Line</th>
+                    <th className="item">Item</th>
+                    <th className="location">Location</th>
                 </tr>
             </thead>
             <tbody>
                 {rows.map((row) => (
                     <tr key={row.id}>
                         <td>{row.id}</td>
-                        <td>
+                        <td className="lineName">
+                            <span></span>
                             <Input
-                                type="number"
+                                type="string"
                                 initialValue={row.lineName}
                                 onSave={(value) =>
-                                    updateRow(row.id, "lineName", value)
+                                    updateRow(row.id, "lineName", `OV-${value}`)
                                 }
                             />
                         </td>
-                        <td>
+                        <td className="item">
                             <Input
                                 type="string"
                                 list={"items"}
@@ -48,7 +49,7 @@ const Table = ({ rows, updateRow }: TableProps) => {
                             </datalist>
                         </td>
 
-                        <td>
+                        <td className="location">
                             <Input
                                 type="string"
                                 initialValue={row.location}
