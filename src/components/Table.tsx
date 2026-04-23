@@ -2,7 +2,6 @@
 import { type line } from "../models/line";
 import { allItems } from "../models/items";
 import Input from "./Input";
-import { useState } from "react";
 
 interface TableProps {
     rows: line[];
@@ -29,14 +28,21 @@ const Table = ({ rows, updateRow, sortRows, sortType }: TableProps) => {
                     <tr key={row.id}>
                         <td>{i + 1}</td>
                         <td className="lineName">
-                            <span></span>
-                            <Input
-                                type="string"
-                                initialValue={row.lineName}
-                                onSave={(value) =>
-                                    updateRow(row.id, "lineName", `OV-${value}`)
-                                }
-                            />
+                            <div className="container">
+                                <label htmlFor={`lineName-${row.id}`}>OV</label>
+                                <Input
+                                    id={`lineName-${row.id}`}
+                                    type="number"
+                                    initialValue={row.lineName}
+                                    onSave={(value) =>
+                                        updateRow(
+                                            row.id,
+                                            "lineName",
+                                            `${value}`
+                                        )
+                                    }
+                                />
+                            </div>
                         </td>
                         <td className="item">
                             <Input

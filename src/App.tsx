@@ -58,12 +58,12 @@ const App = () => {
             updatedRows.sort((a: line, b: line) => {
                 const valueA =
                     a.lineName === "" || a.lineName === null
-                        ? "zzz"
-                        : Number(a.lineName.slice(3));
+                        ? Infinity
+                        : Number(a.lineName);
                 const valueB =
                     b.lineName === "" || b.lineName === null
-                        ? "zzz"
-                        : Number(b.lineName.slice(3));
+                        ? Infinity
+                        : Number(b.lineName);
                 return sortType === "asc" ? valueA - valueB : valueB - valueA;
             });
             return updatedRows;

@@ -78,6 +78,21 @@ td.lineName input {
     width: 15vw;
 }
 
+td.lineName .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+td.lineName .container label {
+    background-color: #f1f1f1;
+    padding: 0.53rem;
+}
+
+td.lineName .container input {
+    font-weight: bold;
+}
+
 td.item input {
     width: 45vw;
 }
