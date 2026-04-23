@@ -11,6 +11,11 @@ interface TableProps {
 }
 
 const Table = ({ rows, updateRow, sortRows, sortType }: TableProps) => {
+    const sortedRows: line[] = [...rows];
+    sortedRows.sort(
+        (a: line, b: line) => +(b.lineName !== "") - +(a.lineName !== "")
+    );
+
     return (
         <table id="table">
             <thead>
@@ -24,7 +29,7 @@ const Table = ({ rows, updateRow, sortRows, sortType }: TableProps) => {
                 </tr>
             </thead>
             <tbody>
-                {rows.map((row, i) => (
+                {sortedRows.map((row, i) => (
                     <tr key={row.id}>
                         <td>{i + 1}</td>
                         <td className="lineName">
