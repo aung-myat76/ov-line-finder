@@ -22,6 +22,7 @@ const App = () => {
     const initialTable: line[] = getLocalOvLine();
 
     const [rows, setRows] = useState<line[]>(initialTable);
+    const [sortType, setSortType] = useState<"asc" | "dsc">("asc");
 
     const updateRow = (id: string, key: keyof line, value: string) => {
         setRows((preRows) => {
@@ -50,9 +51,33 @@ const App = () => {
             localStorage.removeItem("ov-lines");
         }
     };
+
+    const sortRows = () => {
+        setRows((preRows) => {
+            const updatedRows = [...preRows];
+            updatedRows.sort((a: line, b: line) => {
+                const valueA =
+                    a.lineName === "" || a.lineName === null
+                        ? "zzz"
+                        : Number(a.lineName.slice(3));
+                const valueB =
+                    b.lineName === "" || b.lineName === null
+                        ? "zzz"
+                        : Number(b.lineName.slice(3));
+                return sortType === "asc" ? valueA - valueB : valueB - valueA;
+            });
+            return updatedRows;
+        });
+        setSortType(sortType === "asc" ? "dsc" : "asc");
+    };
     return (
         <>
-            <Table rows={rows} updateRow={updateRow} />
+            <Table
+                sortRows={sortRows}
+                sortType={sortType}
+                rows={rows}
+                updateRow={updateRow}
+            />
             <Actions handleReset={handleReset} />
         </>
     );
